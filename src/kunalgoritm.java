@@ -4,7 +4,7 @@ import java.util.*;
 /**
  * Created by Victor on 16-Feb-15.
  */
-public class kunalgoritm implements Runnable
+public class Kunalgoritm implements Runnable
 {
 	int num;
 	ArrayList<ArrayList<Integer>> matrix;
@@ -73,7 +73,7 @@ public class kunalgoritm implements Runnable
 				//System.out.println(arrayOfJuices.get(mt.get(i))+"<-"+arrayOfJuices.get(i));
 		outputNumberOfWashes("juice3.out", num -res);
 	}
-	public kunalgoritm(ArrayList<Juice> arrayOfJuices)
+	public Kunalgoritm(ArrayList<Juice> arrayOfJuices)
 	{
 		this.arrayOfJuices=arrayOfJuices;
 	}

@@ -9,7 +9,7 @@ public class FruitJuice
 		arrayOfJuices.input("juice.in");
 		new Thread(arrayOfJuices).start();
 		//new kunalgoritm().run();
-		new Thread(null, new kunalgoritm(arrayOfJuices.getJuices()), "", 16 * 1024 * 1024).start();
+		new Thread(null, new Kunalgoritm(arrayOfJuices.getJuices()), "", 16 * 1024 * 1024).start();
 		//arrayOfJuices.outputComponents("juice1.out",arrayOfJuices.allComponentsWithoutRepeat());
 	}
 }
