@@ -1,28 +1,26 @@
-import java.util.Comparator;
 /**
  * Created by Victor on 10-Feb-15.
  */
-public class Component
+public class Component implements Comparable<Component>
 {
 	private String name;
-	static MyComparator comparator;
+	Component(String name)
 	{
-		comparator=new MyComparator();
+		this.name=name;
 	}
-	private static class MyComparator implements Comparator//перенести в другой класс
+	public String getName(){return name;}
+	@Override
+	public int compareTo(Component o)
 	{
-		@Override
-		public int compare(Object obj1,Object obj2)
-		{
-			return ((Component)obj1).component.compareTo(((Component)obj2).component);
-		}
+		return name.compareTo(o.name);
 	}
-	Component(String component)
+	@Override
+	public boolean equals(Object o)
 	{
-		this.component=component;
+		return (name.compareTo(((Component)o).getName())==0);
 	}
-	public static MyComparator getMyComparator()
+	public String toString()
 	{
-		return comparator;
+		return name;
 	}
 }
