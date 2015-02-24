@@ -1,9 +1,0 @@
-8
-1 b
-1 a
-2 a b
-2 a d
-3 a d e
-3 a b f
-4 a b f g
-5 a b f g h
