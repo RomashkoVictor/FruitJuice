@@ -1,20 +1,53 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="style.css">
+        <script src="scripts.js"></script>
         <title>Chat</title>
     </head>
-    <body style="background: #F8F8FF;">
+    <body onload="run();" onresize="onResizeDocument();">
+       <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Victor Messanger</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="server">
+          <a><span  id="ConnectedServer" class="label label-success">Connected</span></a>
+          
+        </li>
+      </ul>
+      <div class="navbar-form navbar-left">
+        <div class="input-group">
+              <div class="input-group-addon">@</div>
+                  <input Id="InputName"  autocomplete="off" type="text" class="form-control" maxlength="10" placeholder="Input name" >
+            </div>
+      </div>
+      <ul class="nav navbar-nav navbar-right" style="margin-right: 16%" >
+        <li>
+          <a href="#" Id="Edit" style="height:22px;" style="margin-right: 5% "><i class="glyphicon glyphicon-pencil"></i></a>
+        </li>
+         <li>
+          <a href="#" Id="Remove" style="height:22px;" style="margin-rignt: 5%"><i class="glyphicon glyphicon-trash"></i></a>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
         <div class="container-fluid">
         <div class="row">
         <div class="col-md-2 col-md-offset-2">
-            <div><h4><p style="margin-top: 15%"><span class="label label-success">Connected</span></p></h4></div>
-            <div class="input-group" style="margin-top:25%">
-              <div class="input-group-addon">@</div>
-                  <input type="text" class="form-control" maxlength="10" placeholder="Input name">
-            </div>
             <div><h4><p style="margin-top: 15%"><span class="label label-info">Online:</span></p></h4></div>
             <div>
                 <ul class="list-group">
@@ -26,94 +59,10 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-6" style="margin-top: 7%">
-           <div class="my-table">
-            <table  class="table">
-               <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                <tr>
-                   <td class="col-name">Person 1</td>
-                   <td class="col-text">some message</td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-edit"></i></a></td>
-                   <td class="col-button"><a class="btn-default" href="#"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr> 
-                
+        <div class="col-md-6" style="margin-top: 1%">
+           <div style="margin-top: 1%" class="my-table">
+            <table  class="table" id="talk">
+               
                 
                 </table>
               </div>
@@ -125,9 +74,9 @@
               
             
             <div class="input-group" style="margin-top:5%">
-                <textarea class="form-control" rows="5" type="text" placeholder="Input message..."></textarea>
+                <textarea id="Entered-Text" class="form-control" style="resize:none;" rows="5" type="text" placeholder="Input message..."></textarea>
                 <span class="input-group-btn" style="vertical-align: top;" >
-                    <button class="btn btn-info" type="button">Send</button>
+                    <button id ="send-button" class="btn btn-info" type="button">Send</button>
                 </span>
             </div>
         </div>
