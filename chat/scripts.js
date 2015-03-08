@@ -108,7 +108,8 @@ function onAddButtonClick() {
 function addMessage(value) {
     var scrolling=document.getElementsByClassName('my-table')[0];
     var scrollIsEnd=false;
-    if(scrolling.scrollHeight-scrolling.scrollTop<=380)
+    var heightTable = scrolling.clientHeight;
+    if(scrolling.scrollHeight-scrolling.scrollTop<=heightTable+50)
         scrollIsEnd=true;
 	var table = document.getElementById('talk');
     var row = table.insertRow(-1);
