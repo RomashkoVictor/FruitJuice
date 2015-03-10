@@ -35,3 +35,25 @@ font-size: 10pt;
 .server{
     font-size: 20px;
 }
+.iconsMargin{
+    margin-right: 16%;
+}
+.icon{
+    height:22px;
+    margin-right: 5%;
+}
+.onlineLabel{
+    margin-top: 16%;
+}
+.marginTable{
+    margin-top: 2%;
+}
+.marginInput{
+ margin-top:5%;   
+}
+.nonResize{
+    resize:none;
+}
+.input-group-btn{
+    vertical-align: top;
+}

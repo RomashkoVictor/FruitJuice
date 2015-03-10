@@ -1,7 +1,12 @@
-var username = "";
-var choisenMessage=null;
-var choise=false;
-function run() {
+(function(){
+    var username = "";
+    var choisenMessage=null;
+    var choise=false;
+    
+    window.addEventListener('DOMContentLoaded', run);
+    window.addEventListener('resize',onResizeDocument);
+    
+function run(e){
 	var appContainer = document.getElementById('send-button');
     var textContainer=document.getElementById('Entered-Text');
     var name=document.getElementById('InputName');
@@ -16,7 +21,6 @@ function run() {
     connectedToServer(false);
     onResizeDocument();
 }
-
 
 function onTextInput(e) {
     var key = e.keyCode;
@@ -60,7 +64,7 @@ function setCaretPosition(textarea, pos){
   range.select();
  }
 }
-function onNameInput() {
+function onNameInput(e) {
       var name=document.getElementById('InputName');
     if(!/\S/.test(name.value)){
         name.value = '';
@@ -69,7 +73,7 @@ function onNameInput() {
         username=name.value;
 }
 
-function onAddButtonClick() {
+function onAddButtonClick(e) {
     var name=document.getElementById('InputName');
     while(username==null||username.length === 0)
     {
@@ -148,7 +152,7 @@ function createRowValues(row, text){
     row.addEventListener('click',choiseMessage);
 }
 
-function choiseMessage(){
+function choiseMessage(e){
     if(choisenMessage==null){
         choisenMessage=this;
         choisenMessage.classList.add('myMessage');
@@ -178,13 +182,13 @@ function editable(obj){
     }
 }
 
-function onEdit(){
+function onEdit(e){
     choise=!choise;
      var text=document.getElementById("Entered-Text");
      text.value=choisenMessage.childNodes[1].childNodes[0].childNodes[1].innerText;
 }
 
-function onRemove(){
+function onRemove(e){
     choisenMessage.parentNode.removeChild(choisenMessage);
      editable(false);
     choisenMessage=null;
@@ -216,18 +220,14 @@ function takeDate(){
     return time;
 }
 
-function onResizeDocument() {
-    var all = document.getElementsByTagName('html')[0].clientHeight;
-    var input = document.getElementById('Entered-Text').clientHeight;
-    var navbar = document.getElementsByClassName('navbar')[0].clientHeight;
-    var height = all  - input - 90-navbar;
+function onResizeDocument(e) {
+    var allHeight = document.getElementsByTagName('html')[0].clientHeight;
+    var inputHeight = document.getElementById('Entered-Text').clientHeight;
+    var navbarHeight = document.getElementsByClassName('navbar')[0].clientHeight;
+    var merges=90;
+    var height = allHeight  - inputHeight -navbarHeight-merges;
     height = height.toString() + 'px';
     document.getElementsByClassName('my-table')[0].style.height = height;
 }
-
-//function updateCounter(){
-//	var counter = document.getElementsByClassName('counter-holder')[0];
-//    var count = document.getElementsByClassName("items")[0].rows.length;
-//    
-//    counter.innerText = count.toString();
-//}
+}()
+)
