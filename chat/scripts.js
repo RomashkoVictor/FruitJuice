@@ -2,6 +2,21 @@
     var username = "";
     var choisenMessage=null;
     var choise=false;
+    var newTask = function(text,time) {
+	   return {
+           name:username,
+           message:text,
+           time:time,
+           edited:false,
+           delited:false,
+           uniqueId:uniqueId()
+	   };
+    }
+    var uniqueId = function() {
+	var date = Date.now();
+	   return Math.floor(Math.random()*date).toString();
+    };
+    var taskList = [];
     
     window.addEventListener('DOMContentLoaded', run);
     window.addEventListener('resize',onResizeDocument);
@@ -20,8 +35,17 @@ function run(e){
     document.getElementsByClassName('glyphicon')[1].addEventListener('click',onRemove);
     connectedToServer(false);
     onResizeDocument();
+    $('#InputName').popover();
+    taskList = restore();
+    if(taskList==null)
+    {
+        taskList=[];
+        taskList[0]=username;
+    }
+    username=taskList[0];
+    updateAll();
 }
-
+    
 function onTextInput(e) {
     var key = e.keyCode;
    if (key == 13) {
@@ -49,7 +73,7 @@ function getCaretPosition (textarea) {
         caretPos = textarea.selectionStart;
     return caretPos;
 }
-
+    
 function setCaretPosition(textarea, pos){
     if(textarea.setSelectionRange)
     {
@@ -64,22 +88,26 @@ function setCaretPosition(textarea, pos){
   range.select();
  }
 }
+    
 function onNameInput(e) {
       var name=document.getElementById('InputName');
+    $('#InputName').popover('hide');
     if(!/\S/.test(name.value)){
         name.value = '';
         return;
     }
         username=name.value;
+    taskList[0]=username;
+    store(taskList);
 }
 
 function onAddButtonClick(e) {
     var name=document.getElementById('InputName');
     while(username==null||username.length === 0)
     {
+        $('#InputName').popover('show');
         name.focus();
         return;
-        //username = prompt("Input your username!");
     }
     name.value=username;
     
@@ -88,28 +116,33 @@ function onAddButtonClick(e) {
         message.value = '';
         return;
     }
-    if(choisenMessage==null){
-	   addMessage(message.value);
+    var dateAndTime=takeDate();
+    var task=newTask(message.value,dateAndTime);
+    if(choisenMessage == null || choise != true){
+	   addMessage(task);
+       taskList.push(task);
+        choise=false;
     }
     else{
-        if(choise==true)
-        {
-            choisenMessage.childNodes[1].childNodes[0].childNodes[1].innerText=message.value;
-            choisenMessage.classList.remove('myMessage');
-            editable(false);
-            choisenMessage=null;
-            choise=false;
-        }
-        else
-        {
-            addMessage(message.value);
-        }
+        var idMessage=choisenMessage.getAttribute('id');
+        for(var i=1;i<taskList.length;i++)
+            if(idMessage == taskList[i].uniqueId){
+                taskList[i].message=message.value;
+                taskList[i].edited=true;
+                break;
+            }
+        choisenMessage.childNodes[1].childNodes[0].childNodes[0].innerHTML+=' '+'<i class="glyphicon glyphicon-pencil iconEditedDelited"></i>';
+        choisenMessage.childNodes[1].childNodes[0].childNodes[1].innerText=message.value;
+        choisenMessage.classList.remove('myMessage');
+        editable(false);
+        choisenMessage=null;
+        choise=false;
     }
 	message.value = '';
-	//updateCounter();
+    store(taskList);
 }
 
-function addMessage(value) {
+function addMessage(task) {
     var scrolling=document.getElementsByClassName('my-table')[0];
     var scrollIsEnd=false;
     var heightTable = scrolling.clientHeight;
@@ -117,38 +150,44 @@ function addMessage(value) {
         scrollIsEnd=true;
 	var table = document.getElementById('talk');
     var row = table.insertRow(-1);
-    createRowValues(row, value);
+    createRowValues(row,task);
     var scrolling=document.getElementsByClassName('my-table')[0];
     if(scrollIsEnd==true)
         scrolling.scrollTop = scrolling.scrollHeight;
-
-	//updateCounter();
 }
-
-function createRowValues(row, text){
+    
+function createRowValues(row, task){
 	var tdTime = document.createElement('td');
 	var tdMessage = document.createElement('td');
     var tdDiv=document.createElement('div');
     var h4=document.createElement('h4');
     var p=document.createElement('p');
-    tdTime.classList.add('col-name');
+    var pDiv=document.createElement('div');
+    tdTime.classList.add('col-date');
     tdMessage.classList.add('col-text');
     tdDiv.classList.add('list-group-item');
     h4.classList.add('list-group-item-heading');
-    var pDiv=document.createElement('div');
     pDiv.classList.add('wrap');
-    p.classList.add('list-group-item-text');
-    pDiv.appendChild(p);
     
-    tdTime.innerHTML=takeDate();
+    tdTime.innerHTML=task.time;
     tdMessage.appendChild(tdDiv);
     tdDiv.appendChild(h4);
     tdDiv.appendChild(pDiv);
-    h4.innerHTML=username;
-    p.innerText=text;
-    
+    h4.innerHTML=task.name;
+    pDiv.innerText=task.message;
+     if(task.edited==true)
+    {
+        h4.innerHTML+=' ';
+        h4.innerHTML+='<i class="glyphicon glyphicon-pencil iconEditedDelited"></i>';
+    }
+    if(task.delited==true)
+    {
+         h4.innerHTML+=' ';
+         h4.innerHTML+='<i class="glyphicon glyphicon-trash iconEditedDelited"></i>';
+    }
 	row.appendChild(tdTime);
 	row.appendChild(tdMessage);
+    row.setAttribute('id',task.uniqueId);
     row.addEventListener('click',choiseMessage);
 }
 
@@ -166,8 +205,10 @@ function choiseMessage(e){
             choisenMessage.classList.add('myMessage');
             editable(true);
         }
-        else
+        else{
             choisenMessage=null;
+            choise=false;
+        }
     }   
 }
 
@@ -183,15 +224,44 @@ function editable(obj){
 }
 
 function onEdit(e){
-    choise=!choise;
+     var idMessage=choisenMessage.getAttribute('id');
+    for(var i=1;i<taskList.length;i++)
+            if(idMessage == taskList[i].uniqueId){
+                if(taskList[i].delited == true)
+                {
+                    choisenMessage.classList.remove('myMessage');
+                    return;
+                }
+                taskList[i].edited=true;
+                break;
+        }
+    choise=true;
      var text=document.getElementById("Entered-Text");
      text.value=choisenMessage.childNodes[1].childNodes[0].childNodes[1].innerText;
 }
 
 function onRemove(e){
-    choisenMessage.parentNode.removeChild(choisenMessage);
+    var idMessage=choisenMessage.getAttribute('id');
+        for(var i=1;i<taskList.length;i++)
+            if(idMessage == taskList[i].uniqueId){
+                choisenMessage.classList.remove('myMessage');
+                 if(taskList[i].delited==true)
+                     return;
+                taskList[i].message='';
+                taskList[i].delited=true;
+                if(taskList[i].edited==true)
+                {
+                                choisenMessage.childNodes[1].childNodes[0].childNodes[0].removeChild(
+                                    choisenMessage.childNodes[1].childNodes[0].childNodes[0].childNodes[1]);
+                    taskList[i].edited=false;
+                }
+                break;
+            }
+    choisenMessage.childNodes[1].childNodes[0].childNodes[1].innerText='';
+    choisenMessage.childNodes[1].childNodes[0].childNodes[0].innerHTML+=' '+'<i class="glyphicon glyphicon-trash iconEditedDelited"></i>';
      editable(false);
     choisenMessage=null;
+    store(taskList);
 }
 
 function connectedToServer(e){
@@ -228,6 +298,30 @@ function onResizeDocument(e) {
     var height = allHeight  - inputHeight -navbarHeight-merges;
     height = height.toString() + 'px';
     document.getElementsByClassName('my-table')[0].style.height = height;
+}
+          
+function store(listToSave) {
+	if(typeof(Storage) == "undefined") {
+		alert('localStorage is not accessible');
+		return;
+	}
+	localStorage.setItem("Chat taskList", JSON.stringify(listToSave));
+}
+
+function restore() {
+	if(typeof(Storage) == "undefined") {
+		alert('localStorage is not accessible');
+		return;
+	}
+	var item = localStorage.getItem("Chat taskList");
+	return item && JSON.parse(item);
+}
+  
+function updateAll(){
+     var name=document.getElementById('InputName');
+     name.value=username;
+	   for(var i = 1; i < taskList.length; i++)
+		  addMessage(taskList[i]);
 }
 }()
 )

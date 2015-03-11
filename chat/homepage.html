@@ -4,34 +4,27 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="js/bootstrap.js"></script>
         <script src="scripts.js"></script>
         <title>Chat</title>
     </head>
     <body>
        <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       <a class="navbar-brand" href="#">Victor Messanger</a>
     </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="server">
-          <a><span  id="ConnectedServer" class="label label-success">Connected</span></a>
-          
+          <a><span  id="ConnectedServer" class="label label-success">Connected</span></a> 
         </li>
       </ul>
       <div class="navbar-form navbar-left">
         <div class="input-group">
               <div class="input-group-addon">@</div>
-                  <input id="InputName"  autocomplete="off" type="text" class="form-control" maxlength="10" placeholder="Input name" >
+                <input id="InputName"  autocomplete="off" type="text" class="form-control" maxlength="10" placeholder="Input name" data-placement="bottom" data-trigger="manual" data-toggle="popover" title="WARNING!" data-content=" You must input nickname before sending message.">
             </div>
       </div>
       <ul class="nav navbar-nav navbar-right iconsMargin"  >
@@ -42,8 +35,8 @@
           <a href="#" id="Remove" class="icon"><i class="glyphicon glyphicon-trash"></i></a>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+  </div>
 </nav>
         <div class="container-fluid">
         <div class="row">
@@ -65,7 +58,6 @@
                
                </table>
               </div>
-
             <div class="input-group marginInput">
                 <textarea id="Entered-Text" class="form-control nonResize" rows="5" type="text" placeholder="Input message..."></textarea>
                 <span class="input-group-btn">

@@ -14,7 +14,7 @@
  padding: 4px 10px; 
 font-size: 10pt;
 }
-.col-name{
+.col-date{
     width:20%;
 }
 .col-text{
@@ -56,4 +56,7 @@ font-size: 10pt;
 }
 .input-group-btn{
     vertical-align: top;
+}
+.iconEditedDelited{
+    font-size: 12px;
 }
