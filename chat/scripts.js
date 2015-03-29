@@ -131,7 +131,7 @@
                     taskList[i].edited = true;
                     break;
                 }
-            choisenMessage.childNodes[1].childNodes[0].childNodes[0].innerHTML += ' ' + '<i class="glyphicon glyphicon-pencil iconEditedDelited"></i>';
+            choisenMessage.childNodes[1].childNodes[0].childNodes[0].innerHTML =username+ ' ' + '<i class="glyphicon glyphicon-pencil iconEditedDelited"></i>';
             choisenMessage.childNodes[1].childNodes[0].childNodes[1].innerText = message.value;
             choisenMessage.classList.remove('myMessage');
             editable(false);
