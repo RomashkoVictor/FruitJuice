@@ -7,49 +7,59 @@ import org.json.simple.JSONObject;
 public class Message implements JSONAware {
 	private String username;
 	private String text;
+	private String time;
 	private int ID;
-	private boolean edit;
+	private boolean edited;
 	private boolean deleted;
 
 	Message() {
-		username = "User1";
+		username = "";
 		text = "";
-		ID = (int) (Math.random() * 1000000);
-		edit = false;
+		time="";
+		ID = 0;
+		edited = false;
 		deleted = false;
 	}
 
-	Message(String mess, String name) {
+	Message(String mess, String name, String time) {
 		username = name;
 		text = mess;
-		ID = (int) (Math.random() * 1000000);
-		edit = false;
+		this.time=time;
+		ID = 0;
+		edited = false;
 		deleted = false;
 	}
 
-	public void setID(int id) {ID = id;}
-
-	public int getID() {return ID;}
-
 	public String getUserName() {return username;}
-
+	public void setUserName(String userName){username = userName;}
 	public String getText() {return text;}
+	public void setText(String text){this.text = text;}
+	public String getTime() {return time;}
+	public void setTime(String time){this.time = time;}
+	public int getID() {return ID;}
+	public void setID(int id) {ID = id;}
+	public boolean isEdit(){return edited;}
+	public void setEdit(boolean edited){this.edited = edited;}
+	public boolean isDeleted(){return deleted;}
+	public void setDeleted(boolean deleted){this.deleted = deleted;}
+
 
 	public static Message parse(JSONObject obj) {
 		Message temp = new Message();
-		temp.username = (String) obj.get("UserName");
-		temp.text = (String) obj.get("Text");
+		temp.username = (String) obj.get("username");
+		temp.text = (String) obj.get("text");
+		temp.time = (String) obj.get("time");
 		temp.ID = Integer.parseInt(obj.get("ID").toString());
-		temp.edit = (Boolean) (obj.get("Edit"));
-		temp.deleted = (Boolean) (obj.get("Deleted"));
+		temp.edited = (Boolean) (obj.get("edited"));
+		temp.deleted = (Boolean) (obj.get("deleted"));
 		return temp;
 	}
 
 	public boolean deleteMessage() {
 		if (!deleted) {
-			edit = false;
+			edited = false;
 			deleted = true;
-			text = "This message has been deleted";
+			text = "";
 			return true;
 		}
 		return false;
@@ -57,7 +67,7 @@ public class Message implements JSONAware {
 
 	public boolean editMessage(String text) {
 		if (!deleted) {
-			edit = true;
+			edited = true;
 			this.text = text;
 			return true;
 		}
@@ -67,11 +77,12 @@ public class Message implements JSONAware {
 	@Override
 	public String toJSONString() {
 		JSONObject obj = new JSONObject();
-		obj.put("UserName", username);
-		obj.put("Text", text);
+		obj.put("username", username);
+		obj.put("text", text);
+		obj.put("time",time);
 		obj.put("ID", ID);
-		obj.put("Edit", edit);
-		obj.put("Deleted", deleted);
+		obj.put("edited", edited);
+		obj.put("deleted", deleted);
 		return obj.toString();
 	}
 

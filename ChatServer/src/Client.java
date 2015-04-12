@@ -115,7 +115,7 @@ public class Client implements Runnable {
 		Scanner scanner = new Scanner(System.in);
 
 		while (true) {
-			Message message = new Message(scanner.nextLine(), username);
+			Message message = new Message(scanner.nextLine(), username, "11.11.11");
 			sendMessage(message);
 		}
 	}

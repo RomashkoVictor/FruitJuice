@@ -66,6 +66,7 @@ public class Server implements HttpHandler {
 				Message message = history.get(id);
 				String oldText = message.getText();
 				if (message.deleteMessage()) {
+					history.add(message);
 					System.out.println("Delete Message : " + message.getUserName() + " : " + oldText);
 				}
 			}
@@ -79,6 +80,7 @@ public class Server implements HttpHandler {
 				Message messageOld = history.get(messageNew.getID());
 				String oldText = messageOld.getText();
 				if (messageOld.editMessage(messageNew.getText())) {
+					history.add(messageOld);
 					System.out.println("Edit Message User : " + messageOld.getUserName() + " : \"" + oldText + "\" to \"" + messageNew.getText() + "\"");
 				}
 			}
@@ -94,7 +96,7 @@ public class Server implements HttpHandler {
 			String token = map.get("token");
 			if (token != null && !"".equals(token)) {
 				int index = messageExchange.getIndex(token);
-				return messageExchange.getServerResponse(history.subList(index, history.size()));
+				return messageExchange.getServerResponse(history, index);
 			} else {
 				return "Token query parameter is absent in url: " + query;
 			}

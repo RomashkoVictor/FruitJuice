@@ -18,21 +18,19 @@ public class MessageExchange {
 		return (Integer.valueOf(token.substring(2, token.length() - 2)) - 11) / 8;
 	}
 
-	public String getServerResponse(List<Message> messages) {
+	public String getServerResponse(List<Message> messages,int index) {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("messages", messages);
+		jsonObject.put("messages", messages.subList(index,messages.size()));
 		jsonObject.put("token", getToken(messages.size()));
 		return jsonObject.toJSONString();
 	}
 
 	public String getClientSendMessageRequest(Message message) {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("message", message);
-		return jsonObject.toJSONString();
+		return message.toJSONString();
 	}
 
 	public Message getClientMessage(InputStream inputStream) throws ParseException {
-		return Message.parse((JSONObject) getJSONObject(inputStreamToString(inputStream)).get("message"));
+		return Message.parse( getJSONObject(inputStreamToString(inputStream)));
 	}
 
 	public JSONObject getJSONObject(String json) throws ParseException {
@@ -47,10 +45,10 @@ public class MessageExchange {
 			while ((length = in.read(buffer)) != -1) {
 				baos.write(buffer, 0, length);
 			}
+			baos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return new String(baos.toByteArray());
 	}
 }
