@@ -15,7 +15,7 @@
             time: time,
             edited: false,
             deleted: false,
-            ID: -1
+            id: -1
         };
     }
    
@@ -38,7 +38,7 @@
         editable(false);
         onResizeDocument();
         restore();
-         window.setInterval(restore, 1000);
+         window.setInterval(restore, 500);
     }
     
     function onResizeDocument(e) {
@@ -119,7 +119,7 @@
             return;
         var idMessage = this.getAttribute('id');
         for (var i = 0; i < appState.messages.length; i++)
-            if (idMessage == appState.messages[i].ID)
+            if (idMessage == appState.messages[i].id)
             {
              if(appState.messages[i].username != username)
                  return;
@@ -202,7 +202,7 @@
             h4.innerHTML =message.username + ' ' + '<i class="glyphicon glyphicon-trash iconEditedDeleted"></i>';
         }
        
-        row.setAttribute('id', message.ID);
+        row.setAttribute('id', message.id);
         row.addEventListener('click', choiseMessage);
     }
     
@@ -244,12 +244,11 @@
          else {//edit
             var idMessage = choisenMessage.getAttribute('id');
             for (var i = 0; i < appState.messages.length; i++)
-                if (idMessage == appState.messages[i].ID) {
+                if (idMessage == appState.messages[i].id) {
                     appState.messages[i].text = text.value;
                     appState.messages[i].edited = true;
                     editMessage(appState.messages[i]);
                     choisenMessage.classList.remove('myMessage');
-                    editable(false);
                     choisenMessage = null;
                     choiseEditMessage = false;
                     
@@ -263,12 +262,13 @@
     function onEdit(e) {
         var idMessage = choisenMessage.getAttribute('id');
         for (var i = 0; i < appState.messages.length; i++)
-            if (idMessage == appState.messages[i].ID) {
+            if (idMessage == appState.messages[i].id) {
                 if (appState.messages[i].deleted == true) {
                     choisenMessage.classList.remove('myMessage');
                     editable(false);
                     return;
                 }
+                editable(false);
                 choiseEditMessage = true;
                 var text = document.getElementById("Entered-Text");
                 text.value = choisenMessage.childNodes[1].childNodes[0].childNodes[1].innerText;
@@ -279,7 +279,7 @@
     function onRemove(e) {
         var idMessage = choisenMessage.getAttribute('id');
         for (var i = 0; i < appState.messages.length; i++)
-            if (idMessage == appState.messages[i].ID) {
+            if (idMessage == appState.messages[i].id) {
                 choisenMessage.classList.remove('myMessage');
                 if (appState.messages[i].deleted == true) {
                     choisenMessage.classList.remove('myMessage');
@@ -299,7 +299,7 @@
     function findAndReplace(message){
         for (var i = 0; i < appState.messages.length; i++)
         {
-            if(appState.messages[i].ID == message.ID)
+            if(appState.messages[i].id == message.id)
             {
                 appState.messages[i] = message;
                 update(message);
@@ -310,7 +310,7 @@
     }
     
     function update(message){
-        var mes=document.getElementById(message.ID);
+        var mes=document.getElementById(message.id);
          if (message.edited == true) {
             mes.childNodes[1].childNodes[0].childNodes[0].innerHTML =message.username+ ' ' + '<i class="glyphicon glyphicon-pencil iconEditedDeleted"></i>';
         }

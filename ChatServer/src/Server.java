@@ -50,7 +50,9 @@ public class Server implements HttpHandler {
 			doDelete(httpExchange);
 		} else if ("PUT".equals(httpExchange.getRequestMethod())) {
 			doPut(httpExchange);
-		} else {
+		} else if ("OPTIONS".equals(httpExchange.getRequestMethod())) {
+			response = "";
+		} else{
 			response = "Unsupported http method: " + httpExchange.getRequestMethod();
 		}
 

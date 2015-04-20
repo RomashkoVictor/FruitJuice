@@ -8,24 +8,24 @@ public class Message implements JSONAware {
 	private String username;
 	private String text;
 	private String time;
-	private int ID;
+	private int id;
 	private boolean edited;
 	private boolean deleted;
 
-	Message() {
+	public Message() {
 		username = "";
 		text = "";
 		time="";
-		ID = 0;
+		id = 0;
 		edited = false;
 		deleted = false;
 	}
 
-	Message(String mess, String name, String time) {
+	public Message(String mess, String name, String time) {
 		username = name;
 		text = mess;
 		this.time=time;
-		ID = 0;
+		id = 0;
 		edited = false;
 		deleted = false;
 	}
@@ -36,8 +36,8 @@ public class Message implements JSONAware {
 	public void setText(String text){this.text = text;}
 	public String getTime() {return time;}
 	public void setTime(String time){this.time = time;}
-	public int getID() {return ID;}
-	public void setID(int id) {ID = id;}
+	public int getID() {return id;}
+	public void setID(int id) {this.id = id;}
 	public boolean isEdit(){return edited;}
 	public void setEdit(boolean edited){this.edited = edited;}
 	public boolean isDeleted(){return deleted;}
@@ -49,7 +49,7 @@ public class Message implements JSONAware {
 		temp.username = (String) obj.get("username");
 		temp.text = (String) obj.get("text");
 		temp.time = (String) obj.get("time");
-		temp.ID = Integer.parseInt(obj.get("ID").toString());
+		temp.id = Integer.parseInt(obj.get("id").toString());
 		temp.edited = (Boolean) (obj.get("edited"));
 		temp.deleted = (Boolean) (obj.get("deleted"));
 		return temp;
@@ -80,7 +80,7 @@ public class Message implements JSONAware {
 		obj.put("username", username);
 		obj.put("text", text);
 		obj.put("time",time);
-		obj.put("ID", ID);
+		obj.put("id", id);
 		obj.put("edited", edited);
 		obj.put("deleted", deleted);
 		return obj.toString();
@@ -93,6 +93,6 @@ public class Message implements JSONAware {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (((Message) obj).getID() == ID);
+		return (((Message) obj).getID() == id);
 	}
 }
