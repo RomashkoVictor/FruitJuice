@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Server implements HttpHandler {
 	private List<Message> history = new ArrayList<Message>();
@@ -63,13 +60,16 @@ public class Server implements HttpHandler {
 		String query = httpExchange.getRequestURI().getQuery();
 		if (query != null) {
 			Map<String, String> map = queryToMap(query);
-			Integer id = Integer.parseInt(map.get("id"));
-			if (id >= 0 && id < history.size()) {
-				Message message = history.get(id);
-				String oldText = message.getText();
-				if (message.deleteMessage()) {
-					history.add(message);
-					System.out.println("Delete Message : " + message.getUserName() + " : " + oldText);
+			String id = map.get("id");
+			for(int i = 0; i < history.size(); i++) {
+				if (history.get(i).getID().compareTo(id) == 0) {
+					Message message = history.get(i);
+					String oldText = message.getText();
+					if (message.deleteMessage()) {
+						history.add(message);
+						System.out.println("Delete Message : " + message.getUserName() + " : " + oldText);
+					}
+					break;
 				}
 			}
 		}
@@ -78,12 +78,15 @@ public class Server implements HttpHandler {
 	private void doPut(HttpExchange httpExchange) {
 		try {
 			Message messageNew = messageExchange.getClientMessage(httpExchange.getRequestBody());
-			if (messageNew.getID() >= 0 && messageNew.getID() < history.size()) {
-				Message messageOld = history.get(messageNew.getID());
-				String oldText = messageOld.getText();
-				if (messageOld.editMessage(messageNew.getText())) {
-					history.add(messageOld);
-					System.out.println("Edit Message User : " + messageOld.getUserName() + " : \"" + oldText + "\" to \"" + messageNew.getText() + "\"");
+			for(int i = 0; i < history.size(); i++) {
+				if(messageNew.getID().compareTo(history.get(i).getID())==0) {
+					Message messageOld = history.get(i);
+					String oldText = messageOld.getText();
+					if (messageOld.editMessage(messageNew.getText())) {
+						history.add(messageOld);
+						System.out.println("Edit Message User : " + messageOld.getUserName() + " : \"" + oldText + "\" to \"" + messageNew.getText() + "\"");
+					}
+					break;
 				}
 			}
 		} catch (ParseException e) {
@@ -110,7 +113,7 @@ public class Server implements HttpHandler {
 		try {
 			Message message = messageExchange.getClientMessage(httpExchange.getRequestBody());
 			System.out.println("Get Message from User : " + message);
-			message.setID(history.size());
+			message.setID(UUID.randomUUID().toString());
 			history.add(message);
 		} catch (ParseException e) {
 			System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());

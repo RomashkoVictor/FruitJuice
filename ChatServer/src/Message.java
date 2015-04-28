@@ -1,6 +1,8 @@
 import org.json.simple.JSONAware;
 import org.json.simple.JSONObject;
 
+import java.util.UUID;
+
 /**
  * Created by Victor on 27-Mar-15.
  */
@@ -8,7 +10,7 @@ public class Message implements JSONAware {
 	private String username;
 	private String text;
 	private String time;
-	private int id;
+	private String id;
 	private boolean edited;
 	private boolean deleted;
 
@@ -16,7 +18,7 @@ public class Message implements JSONAware {
 		username = "";
 		text = "";
 		time="";
-		id = 0;
+		id = UUID.randomUUID().toString();
 		edited = false;
 		deleted = false;
 	}
@@ -25,7 +27,7 @@ public class Message implements JSONAware {
 		username = name;
 		text = mess;
 		this.time=time;
-		id = 0;
+		id = UUID.randomUUID().toString();
 		edited = false;
 		deleted = false;
 	}
@@ -36,8 +38,8 @@ public class Message implements JSONAware {
 	public void setText(String text){this.text = text;}
 	public String getTime() {return time;}
 	public void setTime(String time){this.time = time;}
-	public int getID() {return id;}
-	public void setID(int id) {this.id = id;}
+	public String getID() {return id;}
+	public void setID(String id) {this.id = id;}
 	public boolean isEdit(){return edited;}
 	public void setEdit(boolean edited){this.edited = edited;}
 	public boolean isDeleted(){return deleted;}
@@ -49,7 +51,7 @@ public class Message implements JSONAware {
 		temp.username = (String) obj.get("username");
 		temp.text = (String) obj.get("text");
 		temp.time = (String) obj.get("time");
-		temp.id = Integer.parseInt(obj.get("id").toString());
+		temp.id = obj.get("id").toString();
 		temp.edited = (Boolean) (obj.get("edited"));
 		temp.deleted = (Boolean) (obj.get("deleted"));
 		return temp;
